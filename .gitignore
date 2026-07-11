@@ -6,9 +6,6 @@ node_modules/
 .env.local
 .env.*.local
 
-# Локальные запуски и временные скрипты
-apps/api/eval/
-
 # Сборка TypeScript (артефакты компиляции)
 # Обычно компилируется в папки dist, build или out
 dist/
