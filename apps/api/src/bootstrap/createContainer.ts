@@ -13,6 +13,8 @@ import { KeywordScorer } from "../engines/retrieval/scoring/keyword.scorer";
 import { KeywordRetriever } from "../engines/retrieval/retrievers/keyword.retriever";
 import { RetrievalEngine } from "../engines/retrieval/retrieval.engine";
 import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
+import { KeywordRetrievalStep } from "../engines/retrieval/pipeline/keyword-retrieval.step";
+import { RetrievalPipeline } from "../engines/retrieval/pipeline/retrieval.pipeline";
 
 export interface AppContainer {
   chatUseCase: ChatUseCase;
@@ -47,7 +49,11 @@ export function createContainer(): AppContainer {
     scorer,
   );
 
-  const retrievalEngine = new RetrievalEngine(keywordRetriever);
+  const keywordStep = new KeywordRetrievalStep(keywordRetriever);
+
+  const pipeline = new RetrievalPipeline([keywordStep]);
+
+  const retrievalEngine = new RetrievalEngine(pipeline);
 
   // Services
 

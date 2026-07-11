@@ -1,9 +1,9 @@
-import { Retriever } from "./retrievers/retriever";
+import { RetrievalPipeline } from "./pipeline/retrieval.pipeline";
 
 export class RetrievalEngine {
-  constructor(private readonly retriever: Retriever) {}
+  constructor(private readonly pipeline: RetrievalPipeline) {}
 
-  retrieve(query: string, limit?: number) {
-    return this.retriever.retrieve(query, limit);
+  retrieve(query: string) {
+    return this.pipeline.execute(query);
   }
 }
