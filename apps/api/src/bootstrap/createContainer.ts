@@ -11,6 +11,9 @@ import { createRetrievalPipeline } from "../engines/retrieval/pipeline/create-re
 import { RetrievalEngine } from "../engines/retrieval/retrieval.engine";
 import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
 import { InMemoryDocumentStore } from "../storage/documents/in-memory.document.store";
+import { FakeEmbeddingModel } from "../engines/embedding/fake.embedding.model";
+import { InMemoryEmbeddingStore } from "../storage/embeddings/in-memory.embedding.store";
+import { EmbeddingIndexService } from "../engines/embedding/embedding.index.service";
 
 export interface AppContainer {
   chatUseCase: ChatUseCase;
@@ -32,6 +35,10 @@ export function createContainer(): AppContainer {
 
   const chunker = new FixedSizeChunker();
 
+  const embeddingModel = new FakeEmbeddingModel();
+
+  const embeddingStore = new InMemoryEmbeddingStore();
+
   // Retrieval
 
   const pipeline = createRetrievalPipeline(documentStore, chunkStore);
@@ -42,12 +49,18 @@ export function createContainer(): AppContainer {
 
   const knowledgeService = new KnowledgeService(retrievalEngine);
 
+  const embeddingIndexService = new EmbeddingIndexService(
+    embeddingModel,
+    embeddingStore,
+  );
+
   // Use cases
 
   const knowledgeIngestionUseCase = new KnowledgeIngestionUseCase(
     documentStore,
     chunkStore,
     chunker,
+    embeddingIndexService,
   );
 
   const knowledgeListUseCase = new KnowledgeListUseCase(documentStore);

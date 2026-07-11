@@ -12,6 +12,10 @@ export class InMemoryChunkStore implements ChunkStore {
     return [...this.chunks];
   }
 
+  async getById(id: KnowledgeChunk["id"]): Promise<KnowledgeChunk | undefined> {
+    return this.chunks.find((chunk) => chunk.id === id);
+  }
+
   async deleteByDocumentId(documentId: string): Promise<void> {
     this.chunks = this.chunks.filter(
       (chunk) => chunk.documentId !== documentId,

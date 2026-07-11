@@ -5,5 +5,7 @@ export interface ChunkStore {
 
   list(): Promise<KnowledgeChunk[]>;
 
+  getById(chunkId: KnowledgeChunk["id"]): Promise<KnowledgeChunk | undefined>;
+
   deleteByDocumentId(documentId: string): Promise<void>;
 }

@@ -1,6 +1,7 @@
 export interface KnowledgeDocument {
   id: string;
   title: string;
+  content: string;
   createdAt: Date;
 }
 
@@ -9,6 +10,7 @@ export interface KnowledgeChunk {
   documentId: string;
   text: string;
   order: number;
+  createdAt: Date;
 }
 
 export interface KnowledgeSearchResult {
