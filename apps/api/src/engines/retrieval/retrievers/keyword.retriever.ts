@@ -3,6 +3,7 @@ import { Retriever } from "./retriever";
 import { QueryProcessor } from "../query/query.processor";
 import { KeywordScorer } from "../scoring/keyword.scorer";
 import { ChunkStore } from "../../../storage/chunks/chunk.store";
+import { RetrievalContext } from "../pipeline/context";
 
 export class KeywordRetriever implements Retriever {
   constructor(
@@ -12,9 +13,7 @@ export class KeywordRetriever implements Retriever {
     private readonly scorer: KeywordScorer,
   ) {}
 
-  async retrieve(query: string, limit = 3) {
-    const queryWords = this.processor.process(query);
-
+  async retrieve(context: RetrievalContext, limit = 3) {
     const chunks = await this.chunkStore.list();
 
     const results = [];
@@ -26,7 +25,11 @@ export class KeywordRetriever implements Retriever {
         continue;
       }
 
-      const score = this.scorer.score(queryWords, document.title, chunk.text);
+      const score = this.scorer.score(
+        context.queryTokens,
+        document.title,
+        chunk.text,
+      );
 
       if (score > 0) {
         results.push({

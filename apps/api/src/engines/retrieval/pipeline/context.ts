@@ -3,7 +3,13 @@ import { KnowledgeSearchResult } from "../../../modules/knowledge/knowledge.type
 export interface RetrievalContext {
   query: string;
 
+  transformedQuery: string;
+
+  queryTokens: string[];
+
   keywordResults: KnowledgeSearchResult[];
+
+  denseResults: KnowledgeSearchResult[];
 
   finalResults: KnowledgeSearchResult[];
 }

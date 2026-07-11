@@ -1,4 +1,4 @@
-import { RetrievalPipeline } from "./pipeline/retrieval.pipeline";
+import { RetrievalPipeline } from "./pipeline/pipeline";
 
 export class RetrievalEngine {
   constructor(private readonly pipeline: RetrievalPipeline) {}

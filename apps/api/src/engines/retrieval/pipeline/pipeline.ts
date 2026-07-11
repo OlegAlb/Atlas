@@ -1,5 +1,5 @@
-import { RetrievalStep } from "./retrieval-step";
-import { RetrievalContext } from "./retrieval.context";
+import { RetrievalStep } from "./step";
+import { RetrievalContext } from "./context";
 
 export class RetrievalPipeline {
   constructor(private readonly steps: RetrievalStep[]) {}
@@ -7,7 +7,15 @@ export class RetrievalPipeline {
   async execute(query: string) {
     let context: RetrievalContext = {
       query,
+
+      transformedQuery: query,
+
+      queryTokens: [],
+
       keywordResults: [],
+
+      denseResults: [],
+
       finalResults: [],
     };
 

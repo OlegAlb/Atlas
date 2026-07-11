@@ -1,5 +1,9 @@
 import { KnowledgeSearchResult } from "../../../modules/knowledge/knowledge.types";
+import { RetrievalContext } from "../pipeline/context";
 
 export interface Retriever {
-  retrieve(query: string, limit?: number): Promise<KnowledgeSearchResult[]>;
+  retrieve(
+    context: RetrievalContext,
+    limit?: number,
+  ): Promise<KnowledgeSearchResult[]>;
 }
