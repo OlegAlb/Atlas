@@ -7,7 +7,10 @@
     "dev": "tsx watch apps/api/src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "eval": "tsx apps/api/eval/index.ts"
+    "eval": "tsx apps/api/eval/index.ts",
+    "eval:hybrid": "tsx apps/api/eval/index.ts --hybrid",
+    "eval:dense": "tsx apps/api/eval/index.ts --dense",
+    "eval:bm25": "tsx apps/api/eval/index.ts --bm25"
   },
   "keywords": [],
   "author": "",

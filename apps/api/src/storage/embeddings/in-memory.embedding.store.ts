@@ -1,21 +1,34 @@
-import { Embedding } from "../../engines/embedding/embedding";
+import { Embedding } from "../../infrastructure/embedding/embedding.provider";
 import { EmbeddingStore } from "./embedding.store";
 
-export class InMemoryEmbeddingStore implements EmbeddingStore {
-  private readonly embeddings = new Map<string, Embedding>();
+export interface StoredEmbedding {
+  chunkId: string;
+  embedding: Embedding;
+}
 
-  async save(chunkId: string, embedding: Embedding) {
-    this.embeddings.set(chunkId, embedding);
+export class InMemoryEmbeddingStore implements EmbeddingStore {
+  private embeddings = new Map<string, Embedding>();
+
+  async save(item: StoredEmbedding) {
+    this.embeddings.set(item.chunkId, item.embedding);
   }
 
-  async getByChunkId(chunkId: string) {
+  async saveMany(items: StoredEmbedding[]): Promise<void> {
+    for (const item of items) {
+      this.embeddings.set(item.chunkId, item.embedding);
+    }
+  }
+
+  async getByChunkId(chunkId: string): Promise<Embedding | null> {
     return this.embeddings.get(chunkId) ?? null;
   }
 
-  async getAll() {
-    return [...this.embeddings.entries()].map(([chunkId, embedding]) => ({
-      chunkId,
-      embedding,
-    }));
+  async getAll(): Promise<StoredEmbedding[]> {
+    return Array.from(this.embeddings.entries()).map(
+      ([chunkId, embedding]) => ({
+        chunkId,
+        embedding,
+      }),
+    );
   }
 }

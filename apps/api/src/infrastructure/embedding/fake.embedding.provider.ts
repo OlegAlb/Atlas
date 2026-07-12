@@ -1,7 +1,6 @@
-import { Embedding } from "./embedding";
-import { EmbeddingModel } from "./embedding.model";
+import { Embedding, EmbeddingProvider } from "./embedding.provider";
 
-export class FakeEmbeddingModel implements EmbeddingModel {
+export class FakeEmbeddingProvider implements EmbeddingProvider {
   constructor(private readonly dimensions = 128) {}
 
   async embed(text: string): Promise<Embedding> {
@@ -16,6 +15,10 @@ export class FakeEmbeddingModel implements EmbeddingModel {
     return {
       values,
     };
+  }
+
+  async embedMany(texts: string[]) {
+    return Promise.all(texts.map((text) => this.embed(text)));
   }
 
   private hash(text: string): number {

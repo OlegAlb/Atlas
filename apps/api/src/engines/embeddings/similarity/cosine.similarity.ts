@@ -1,4 +1,4 @@
-import { Embedding } from "../embedding";
+import { Embedding } from "../../../infrastructure/embedding/embedding.provider";
 import { Similarity } from "./similarity";
 
 export class CosineSimilarity implements Similarity {

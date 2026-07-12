@@ -1,15 +1,15 @@
+import { EmbeddingProvider } from "../../../infrastructure/embedding/embedding.provider";
 import { KnowledgeSearchResult } from "../../../modules/knowledge/knowledge.types";
 import { ChunkStore } from "../../../storage/chunks/chunk.store";
 import { DocumentStore } from "../../../storage/documents/document.store";
 import { EmbeddingStore } from "../../../storage/embeddings/embedding.store";
-import { EmbeddingModel } from "../../embedding/embedding.model";
-import { Similarity } from "../../embedding/similarity/similarity";
+import { Similarity } from "../../embeddings/similarity/similarity";
 import { RetrievalContext } from "../pipeline/context";
 import { Retriever } from "./retriever";
 
 export class DenseRetriever implements Retriever {
   constructor(
-    private readonly embeddingModel: EmbeddingModel,
+    private readonly embeddingProvider: EmbeddingProvider,
     private readonly embeddingStore: EmbeddingStore,
     private readonly chunkStore: ChunkStore,
     private readonly documentStore: DocumentStore,
@@ -22,7 +22,7 @@ export class DenseRetriever implements Retriever {
   ): Promise<KnowledgeSearchResult[]> {
     const query = context.rewrittenQuery ?? context.query;
 
-    const queryEmbedding = await this.embeddingModel.embed(query);
+    const queryEmbedding = await this.embeddingProvider.embed(query);
 
     const embeddings = await this.embeddingStore.getAll();
 
@@ -50,6 +50,14 @@ export class DenseRetriever implements Retriever {
         source: "dense",
       });
     }
+
+    console.log({
+      query,
+      top: results.slice(0, 3).map((item) => ({
+        title: item.document.title,
+        score: item.score,
+      })),
+    });
 
     return results.sort((a, b) => b.score - a.score).slice(0, limit);
   }

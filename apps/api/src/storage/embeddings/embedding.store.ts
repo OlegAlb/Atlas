@@ -1,4 +1,4 @@
-import { Embedding } from "../../engines/embedding/embedding";
+import { Embedding } from "../../infrastructure/embedding/embedding.provider";
 
 export interface StoredEmbedding {
   chunkId: string;
@@ -6,7 +6,9 @@ export interface StoredEmbedding {
 }
 
 export interface EmbeddingStore {
-  save(chunkId: string, embedding: Embedding): Promise<void>;
+  save(embedding: StoredEmbedding): Promise<void>;
+
+  saveMany(embeddings: StoredEmbedding[]): Promise<void>;
 
   getByChunkId(chunkId: string): Promise<Embedding | null>;
 

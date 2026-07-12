@@ -18,5 +18,5 @@ export interface KnowledgeSearchResult {
   chunk: KnowledgeChunk;
   score: number;
 
-  source?: "keyword" | "dense";
+  source?: "keyword" | "dense" | "bm25";
 }

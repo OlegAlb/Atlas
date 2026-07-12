@@ -1,11 +1,9 @@
-import { EmbeddingIndexService } from "../../engines/embedding/embedding.index.service";
 import { ChunkStore } from "../../storage/chunks/chunk.store";
 import { DocumentStore } from "../../storage/documents/document.store";
-import { EmbeddingStore } from "../../storage/embeddings/embedding.store";
-import { FixedSizeChunker } from "../chunking/fixed-size.chunker";
 import { ChunkCandidate, TextChunker } from "../chunking/text-chunker";
 import { CreateKnowledgeDocumentDTO } from "./knowledge.dto";
-import { KnowledgeChunk, KnowledgeDocument } from "./knowledge.types";
+import { KnowledgeIndexer } from "./knowledge.indexer";
+import { KnowledgeDocument } from "./knowledge.types";
 
 export interface IngestDocumentDTO {
   title: string;
@@ -17,7 +15,7 @@ export class KnowledgeIngestionUseCase {
     private documentStore: DocumentStore,
     private chunkStore: ChunkStore,
     private chunker: TextChunker,
-    private embeddingIndexService: EmbeddingIndexService,
+    private knowledgeIndexer: KnowledgeIndexer,
   ) {}
 
   async execute(dto: CreateKnowledgeDocumentDTO) {
@@ -33,7 +31,7 @@ export class KnowledgeIngestionUseCase {
 
     await this.chunkStore.save(chunks);
 
-    await this.embeddingIndexService.index(chunks);
+    await this.knowledgeIndexer.index(chunks);
 
     return {
       documentId: document.id,

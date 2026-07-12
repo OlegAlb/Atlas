@@ -1,21 +1,24 @@
 import cases from "./cases.json";
 
-import { createContainer } from "../src/bootstrap/createContainer";
+import { createEvaluationContainer } from "../src/bootstrap/createEvaluationContainer";
 import { seedKnowledge } from "./fixtures";
+import { createHybridRetrievalEngine } from "../src/engines/retrieval/factories/create-hybrid-engine";
 
-export async function runEvaluation() {
-  const container = createContainer();
+export async function runHybridEvaluation() {
+  const container = createEvaluationContainer();
 
-  await seedKnowledge(container);
+  await seedKnowledge(container.knowledgeIngestionUseCase);
 
-  const knowledge = container.knowledgeService;
+  const retrievalEngine = createHybridRetrievalEngine(
+    container.retrievalDependencies,
+  );
 
   let success = 0;
 
   console.log("\nAtlas RAG Evaluation\n");
 
   for (const testCase of cases) {
-    const results = await knowledge.retrieve(testCase.question);
+    const results = await retrievalEngine.retrieve(testCase.question);
 
     const found = results[0];
 
