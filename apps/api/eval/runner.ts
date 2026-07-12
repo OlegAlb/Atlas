@@ -26,24 +26,29 @@ export async function runEvaluation() {
     }
 
     console.log(`
-${passed ? "✅" : "❌"}
+      ${passed ? "✅" : "❌"}
 
-Question:
-${testCase.question}
+      Question:
+      ${testCase.question}
 
-Expected:
-${testCase.expectedTitle}
+      Expected:
+      ${testCase.expectedTitle}
 
-Found:
-${found?.document.id ?? "none"}
+      Found:
+      ${found?.document.id ?? "none"}
 
-Score:
-${found?.score ?? 0}
-`);
+      Top result:
+      ${found?.document.title}
+
+      Source:
+      ${found?.source}
+
+      Score:
+      ${found?.score ?? 0}
+    `);
   }
 
   console.log(`
-Accuracy:
-${((success / cases.length) * 100).toFixed(1)}%
-`);
+    Accuracy: ${((success / cases.length) * 100).toFixed(1)}%
+  `);
 }

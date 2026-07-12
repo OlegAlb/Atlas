@@ -8,21 +8,15 @@ export class RetrievalPipeline {
     let context: RetrievalContext = {
       query,
 
-      transformedQuery: query,
-
       queryTokens: [],
 
-      keywordResults: [],
-
-      denseResults: [],
-
-      finalResults: [],
+      results: [],
     };
 
     for (const step of this.steps) {
       context = await step.run(context);
     }
 
-    return context.finalResults;
+    return context.results;
   }
 }

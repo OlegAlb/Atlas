@@ -20,7 +20,7 @@ export class DenseRetriever implements Retriever {
     context: RetrievalContext,
     limit = 3,
   ): Promise<KnowledgeSearchResult[]> {
-    const query = context.transformedQuery ?? context.query;
+    const query = context.rewrittenQuery ?? context.query;
 
     const queryEmbedding = await this.embeddingModel.embed(query);
 
@@ -47,6 +47,7 @@ export class DenseRetriever implements Retriever {
         chunk,
         document,
         score,
+        source: "dense",
       });
     }
 

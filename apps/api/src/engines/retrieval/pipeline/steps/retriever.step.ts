@@ -3,21 +3,14 @@ import { RetrievalContext } from "../context";
 import { RetrievalStep } from "../step";
 
 export class RetrieverStep implements RetrievalStep {
-  constructor(
-    private readonly retriever: Retriever,
+  constructor(private readonly retriever: Retriever) {}
 
-    private readonly source: "keywordResults" | "denseResults",
-  ) {}
-
-  async run(context: RetrievalContext) {
+  async run(context: RetrievalContext): Promise<RetrievalContext> {
     const results = await this.retriever.retrieve(context);
 
-    context[this.source] = results;
-
-    if (context.finalResults.length === 0) {
-      context.finalResults = results;
-    }
-
-    return context;
+    return {
+      ...context,
+      results,
+    };
   }
 }

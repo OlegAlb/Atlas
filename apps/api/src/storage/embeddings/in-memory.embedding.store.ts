@@ -12,7 +12,7 @@ export class InMemoryEmbeddingStore implements EmbeddingStore {
     return this.embeddings.get(chunkId) ?? null;
   }
 
-  async list() {
+  async getAll() {
     return [...this.embeddings.entries()].map(([chunkId, embedding]) => ({
       chunkId,
       embedding,
