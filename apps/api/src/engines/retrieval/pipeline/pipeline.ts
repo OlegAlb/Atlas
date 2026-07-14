@@ -11,12 +11,17 @@ export class RetrievalPipeline {
       queryTokens: [],
 
       results: [],
+
+      trace: {
+        query,
+        steps: [],
+      },
     };
 
     for (const step of this.steps) {
       context = await step.run(context);
     }
 
-    return context.results;
+    return context;
   }
 }

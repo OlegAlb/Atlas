@@ -4,6 +4,7 @@ import { ChunkCandidate, TextChunker } from "../chunking/text-chunker";
 import { CreateKnowledgeDocumentDTO } from "./knowledge.dto";
 import { KnowledgeIndexer } from "./knowledge.indexer";
 import { KnowledgeDocument } from "./knowledge.types";
+import { KnowledgeAsset } from "./models/knowledge-asset";
 
 export interface IngestDocumentDTO {
   title: string;
@@ -21,7 +22,17 @@ export class KnowledgeIngestionUseCase {
   async execute(dto: CreateKnowledgeDocumentDTO) {
     const document = this.createDocument(dto);
 
-    const candidates = this.chunker.split(document.content);
+    const asset: KnowledgeAsset = {
+      id: document.id,
+      title: document.title,
+      text: document.content,
+      metadata: {
+        source: "fixture",
+        mimeType: "text/plain",
+      },
+    };
+
+    const candidates = this.chunker.chunk(asset);
 
     const chunks = candidates.map((candidate) =>
       this.createChunk(candidate, document),

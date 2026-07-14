@@ -1,10 +1,14 @@
 import { createEvaluationContainer } from "../src/bootstrap/createEvaluationContainer";
 import { createBM25RetrievalEngine } from "../src/engines/retrieval/factories/create-bm25-engine";
 import cases from "./cases.json";
-import { seedKnowledge } from "./fixtures";
+import { seedKnowledge } from "./seedKnowledge";
 
 export async function runBM25Evaluation() {
   const container = createEvaluationContainer();
+
+  //   dependencies.bm25Retriever,
+  // dependencies.processor,
+  // dependencies.tracer,
 
   await seedKnowledge(container.knowledgeIngestionUseCase);
 
@@ -15,11 +19,11 @@ export async function runBM25Evaluation() {
   let success = 0;
 
   for (const testCase of cases) {
-    const results = await retrievalEngine.retrieve(testCase.question);
+    const { results } = await retrievalEngine.retrieve(testCase.question);
 
     const found = results[0];
 
-    const passed = found?.document.title === testCase.expectedTitle;
+    const passed = found?.document.title === testCase.expectedDocument;
 
     if (passed) {
       success++;
@@ -27,7 +31,7 @@ export async function runBM25Evaluation() {
 
     console.log({
       question: testCase.question,
-      expected: testCase.expectedTitle,
+      expected: testCase.expectedDocument,
       found: found?.document.title,
       score: found?.score,
     });

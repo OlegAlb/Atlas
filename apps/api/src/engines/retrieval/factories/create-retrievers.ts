@@ -1,27 +1,40 @@
+import { CosineSimilarity } from "../../embeddings/similarity/cosine.similarity";
+import { RRFFusion } from "../fusion/rrf.fusion";
 import { BM25Retriever } from "../retrievers/bm25/bm25.retriever";
+import { BM25Scorer } from "../retrievers/bm25/bm25.scorer";
 import { DenseRetriever } from "../retrievers/dense.retriever";
 import { HybridRetriever } from "../retrievers/hybrid.retriever";
 import { RetrievalDependencies } from "./retrieval.dependencies";
 
-export function createRetrievers(deps: RetrievalDependencies) {
+export function createRetrievers(dependencies: RetrievalDependencies) {
   const bm25Retriever = new BM25Retriever(
-    deps.chunkStore,
-    deps.documentStore,
-    deps.bm25Indexer,
-    deps.bm25Scorer,
+    dependencies.chunkStore,
+    dependencies.documentStore,
+    dependencies.bm25Indexer,
+    new BM25Scorer(),
   );
 
   const denseRetriever = new DenseRetriever(
-    deps.embeddingProvider,
-    deps.embeddingStore,
-    deps.chunkStore,
-    deps.documentStore,
-    deps.similarity,
+    dependencies.embeddingProvider,
+    dependencies.embeddingStore,
+    dependencies.chunkStore,
+    dependencies.documentStore,
+    new CosineSimilarity(),
   );
 
   const hybridRetriever = new HybridRetriever(
-    [bm25Retriever, denseRetriever],
-    deps.fusion,
+    [
+      {
+        name: "bm25",
+        retriever: bm25Retriever,
+      },
+      {
+        name: "dense",
+        retriever: denseRetriever,
+      },
+    ],
+    new RRFFusion(),
+    dependencies.tracer,
   );
 
   return {

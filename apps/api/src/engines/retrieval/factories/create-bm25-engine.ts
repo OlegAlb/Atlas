@@ -7,6 +7,11 @@ export function createBM25RetrievalEngine(deps: RetrievalDependencies) {
   const { bm25Retriever } = createRetrievers(deps);
 
   return new RetrievalEngine(
-    createRetrievalPipeline(bm25Retriever, deps.processor),
+    createRetrievalPipeline(
+      bm25Retriever,
+      deps.reranker,
+      deps.processor,
+      deps.tracer,
+    ),
   );
 }

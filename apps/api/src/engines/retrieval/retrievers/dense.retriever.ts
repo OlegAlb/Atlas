@@ -51,14 +51,6 @@ export class DenseRetriever implements Retriever {
       });
     }
 
-    console.log({
-      query,
-      top: results.slice(0, 3).map((item) => ({
-        title: item.document.title,
-        score: item.score,
-      })),
-    });
-
     return results.sort((a, b) => b.score - a.score).slice(0, limit);
   }
 }

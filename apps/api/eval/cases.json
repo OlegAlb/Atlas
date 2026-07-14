@@ -1,14 +1,206 @@
 [
   {
+    "question": "Как оплатить заказ?",
+    "expectedDocument": "Оплата заказа"
+  },
+  {
+    "question": "Можно оплатить через СБП?",
+    "expectedDocument": "Оплата заказа"
+  },
+  {
+    "question": "Карта не проходит при оплате, что делать?",
+    "expectedDocument": "Проблемы с оплатой"
+  },
+  {
+    "question": "Почему платеж отклоняется?",
+    "expectedDocument": "Проблемы с оплатой"
+  },
+  {
+    "question": "Мой заказ где сейчас?",
+    "expectedDocument": "Статус заказа"
+  },
+  {
+    "question": "Когда придет мой заказ?",
+    "expectedDocument": "Сроки доставки"
+  },
+  {
+    "question": "Где посмотреть статус покупки?",
+    "expectedDocument": "Статус заказа"
+  },
+  {
+    "question": "Как узнать, отправили ли мой товар?",
+    "expectedDocument": "Отслеживание доставки"
+  },
+  {
+    "question": "Я хочу отказаться от покупки",
+    "expectedDocument": "Отмена заказа"
+  },
+  {
+    "question": "Можно отменить заказ?",
+    "expectedDocument": "Отмена заказа"
+  },
+  {
+    "question": "Я случайно заказал не то, можно вернуть?",
+    "expectedDocument": "Возврат товара"
+  },
+  {
+    "question": "Мне деньги назад получить можно?",
+    "expectedDocument": "Возврат денег"
+  },
+  {
+    "question": "Когда вернут деньги за товар?",
+    "expectedDocument": "Возврат денег"
+  },
+  {
     "question": "Как оформить возврат?",
-    "expectedTitle": "Политика возврата"
+    "expectedDocument": "Возврат товара"
   },
   {
-    "question": "Как оплатить?",
-    "expectedTitle": "Оплата"
+    "question": "Товар не подошел, хочу вернуть",
+    "expectedDocument": "Возврат товара"
   },
   {
-    "question": "Сколько идет доставка?",
-    "expectedTitle": "Доставка"
+    "question": "Через сколько дней можно вернуть покупку?",
+    "expectedDocument": "Возврат товара"
+  },
+  {
+    "question": "Можно поменять размер?",
+    "expectedDocument": "Обмен товара"
+  },
+  {
+    "question": "Мне нужен другой товар вместо этого",
+    "expectedDocument": "Обмен товара"
+  },
+  {
+    "question": "Есть скидочный код?",
+    "expectedDocument": "Промокоды"
+  },
+  {
+    "question": "Куда вводить промокод?",
+    "expectedDocument": "Промокоды"
+  },
+  {
+    "question": "Почему мой купон не работает?",
+    "expectedDocument": "Промокоды"
+  },
+  {
+    "question": "Какие сейчас есть акции?",
+    "expectedDocument": "Скидки и акции"
+  },
+  {
+    "question": "Можно ли использовать два промокода?",
+    "expectedDocument": "Промокоды"
+  },
+  {
+    "question": "Как зарегистрироваться?",
+    "expectedDocument": "Регистрация аккаунта"
+  },
+  {
+    "question": "Хочу создать профиль",
+    "expectedDocument": "Регистрация аккаунта"
+  },
+  {
+    "question": "Не могу войти, забыл пароль",
+    "expectedDocument": "Восстановление пароля"
+  },
+  {
+    "question": "Как поменять свои данные?",
+    "expectedDocument": "Изменение данных аккаунта"
+  },
+  {
+    "question": "Где мои прошлые заказы?",
+    "expectedDocument": "Личный кабинет"
+  },
+  {
+    "question": "Как удалить учетную запись?",
+    "expectedDocument": "Удаление аккаунта"
+  },
+  {
+    "question": "Хочу отключить рассылку",
+    "expectedDocument": "Подписка на новости"
+  },
+  {
+    "question": "Как отменить премиум?",
+    "expectedDocument": "Отмена подписки"
+  },
+  {
+    "question": "Сколько стоит подписка?",
+    "expectedDocument": "Платная подписка"
+  },
+  {
+    "question": "Можно отключить автоматическую оплату?",
+    "expectedDocument": "Отмена подписки"
+  },
+  {
+    "question": "Как добавить товар в заказ?",
+    "expectedDocument": "Изменение заказа"
+  },
+  {
+    "question": "Я хочу изменить заказ",
+    "expectedDocument": "Изменение заказа"
+  },
+  {
+    "question": "Где находится моя корзина?",
+    "expectedDocument": "Корзина товаров"
+  },
+  {
+    "question": "Как сделать покупку?",
+    "expectedDocument": "Оформление заказа"
+  },
+  {
+    "question": "Как получить заказ?",
+    "expectedDocument": "Пункты выдачи"
+  },
+  {
+    "question": "Есть доставка курьером?",
+    "expectedDocument": "Доставка заказа"
+  },
+  {
+    "question": "Сколько ждать доставку?",
+    "expectedDocument": "Сроки доставки"
+  },
+  {
+    "question": "Можно забрать самому?",
+    "expectedDocument": "Пункты выдачи"
+  },
+  {
+    "question": "Где мой трек номер?",
+    "expectedDocument": "Отслеживание доставки"
+  },
+  {
+    "question": "Почему доставка задерживается?",
+    "expectedDocument": "Сроки доставки"
+  },
+  {
+    "question": "Можно оставить отзыв?",
+    "expectedDocument": "Отзывы о товарах"
+  },
+  {
+    "question": "Есть гарантия?",
+    "expectedDocument": "Гарантия на товары"
+  },
+  {
+    "question": "Куда писать если проблема?",
+    "expectedDocument": "Связь со службой поддержки"
+  },
+  {
+    "question": "Мне пришло сообщение о заказе",
+    "expectedDocument": "Уведомления о заказах"
+  },
+  {
+    "question": "Мой заказ еще не пришел, что делать?",
+    "expectedDocument": "Статус заказа"
+  },
+  {
+    "question": "Мне пришел бракованный товар",
+    "expectedDocument": "Гарантия на товары"
+  },
+  {
+    "question": "Хочу вернуть деньги за подписку",
+    "expectedDocument": "Отмена подписки"
+  },
+  {
+    "question": "Можно изменить адрес доставки?",
+    "expectedDocument": "Изменение заказа"
   }
 ]

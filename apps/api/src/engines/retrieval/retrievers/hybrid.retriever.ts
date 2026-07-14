@@ -1,22 +1,34 @@
 import { FusionStrategy } from "../fusion/fusion.strategy";
-import { KnowledgeSearchResult } from "../../../modules/knowledge/knowledge.types";
-import { Retriever } from "./retriever";
+import { RetrievalTracer } from "../observability/retrieval.trace";
 import { RetrievalContext } from "../pipeline/context";
+import { NamedRetriever, Retriever } from "./retriever";
 
 export class HybridRetriever implements Retriever {
   constructor(
-    private readonly retrievers: Retriever[],
+    private readonly retrievers: NamedRetriever[],
     private readonly fusion: FusionStrategy,
+    private readonly tracer: RetrievalTracer,
   ) {}
 
-  async retrieve(
-    context: RetrievalContext,
-    limit = 3,
-  ): Promise<KnowledgeSearchResult[]> {
+  async retrieve(context: RetrievalContext, limit = 10) {
     const results = await Promise.all(
-      this.retrievers.map((retriever) => retriever.retrieve(context, limit)),
+      this.retrievers.map(async ({ name, retriever }) => {
+        const startedAt = Date.now();
+
+        const result = await retriever.retrieve(context, limit);
+
+        this.tracer.record(context, name, Date.now() - startedAt, result);
+
+        return result;
+      }),
     );
 
-    return this.fusion.fuse(results).slice(0, limit);
+    const startedAt = Date.now();
+
+    const fused = this.fusion.fuse(results);
+
+    this.tracer.record(context, "rrf", Date.now() - startedAt, fused);
+
+    return fused.slice(0, limit);
   }
 }

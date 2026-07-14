@@ -2,7 +2,7 @@ import { createEvaluationContainer } from "../src/bootstrap/createEvaluationCont
 import { createDenseRetrievalEngine } from "../src/engines/retrieval/factories/create-dense-engine";
 import cases from "./cases.json";
 
-import { seedKnowledge } from "./fixtures";
+import { seedKnowledge } from "./seedKnowledge";
 
 export async function runDenseEvaluation() {
   const container = createEvaluationContainer();
@@ -18,30 +18,21 @@ export async function runDenseEvaluation() {
   console.log("\nAtlas Dense Retrieval Evaluation\n");
 
   for (const testCase of cases) {
-    const results = await retrievalEngine.retrieve(testCase.question);
+    const { results } = await retrievalEngine.retrieve(testCase.question);
 
     const found = results[0];
 
-    const passed = found?.document.title === testCase.expectedTitle;
+    const passed = found?.document.title === testCase.expectedDocument;
 
     if (passed) {
       success++;
     }
 
     console.log(`
-      ${passed ? "✅" : "❌"}
-
-      Question:
-      ${testCase.question}
-
-      Expected:
-      ${testCase.expectedTitle}
-
-      Found:
-      ${found?.document.title ?? "none"}
-
-      Score:
-      ${found?.score ?? 0}
+      Question: ${testCase.question}
+      Expected: ${testCase.expectedDocument}
+      Found: ${found?.document.title ?? "none"}
+      Score: ${found?.score ?? 0}
     `);
   }
 

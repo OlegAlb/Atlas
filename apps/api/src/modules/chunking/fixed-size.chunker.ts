@@ -1,3 +1,4 @@
+import { KnowledgeAsset } from "../knowledge/models/knowledge-asset";
 import { ChunkCandidate, TextChunker } from "./text-chunker";
 
 export class FixedSizeChunker implements TextChunker {
@@ -6,18 +7,21 @@ export class FixedSizeChunker implements TextChunker {
     private readonly overlap = 200,
   ) {}
 
-  split(document: string): ChunkCandidate[] {
+  chunk(asset: KnowledgeAsset): ChunkCandidate[] {
     const chunks: ChunkCandidate[] = [];
+
+    const text = asset.text;
 
     let start = 0;
     let order = 0;
 
-    while (start < document.length) {
-      const end = Math.min(start + this.chunkSize, document.length);
+    while (start < text.length) {
+      const end = Math.min(start + this.chunkSize, text.length);
 
       chunks.push({
         order,
-        text: document.slice(start, end),
+        text: text.slice(start, end),
+        metadata: {},
       });
 
       order++;

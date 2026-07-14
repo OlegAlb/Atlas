@@ -3,6 +3,7 @@ import { KnowledgeIngestionUseCase } from "../modules/knowledge/knowledge.ingest
 
 import { EmbeddingIndexer } from "../engines/embeddings/embedding.indexer";
 import { RetrievalDependencies } from "../engines/retrieval/factories/retrieval.dependencies";
+import { RetrievalTracer } from "../engines/retrieval/observability/retrieval.trace";
 import { QueryProcessor } from "../engines/retrieval/query/query.processor";
 import { InMemoryBM25Indexer } from "../engines/retrieval/retrievers/bm25/in-memory-bm25.indexer";
 import { createEmbeddingProvider } from "../infrastructure/embedding/embedding.factory";
@@ -10,9 +11,8 @@ import { KnowledgeIndexer } from "../modules/knowledge/knowledge.indexer";
 import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
 import { InMemoryDocumentStore } from "../storage/documents/in-memory.document.store";
 import { InMemoryEmbeddingStore } from "../storage/embeddings/in-memory.embedding.store";
-import { BM25Scorer } from "../engines/retrieval/retrievers/bm25/bm25.scorer";
-import { CosineSimilarity } from "../engines/embeddings/similarity/cosine.similarity";
-import { SimpleFusion } from "../engines/retrieval/fusion/simple.fusion";
+import { NoopReranker } from "../modules/rerankers/noop.reranker";
+import { createNoopReranker } from "../modules/rerankers/reranker.factory";
 
 export interface EvaluationContainer {
   knowledgeIngestionUseCase: KnowledgeIngestionUseCase;
@@ -26,15 +26,15 @@ export function createEvaluationContainer(): EvaluationContainer {
 
   const processor = new QueryProcessor();
 
+  const tracer = new RetrievalTracer();
+
+  const reranker = createNoopReranker();
+
   const embeddingProvider = createEmbeddingProvider();
 
   const embeddingStore = new InMemoryEmbeddingStore();
 
   const bm25Indexer = new InMemoryBM25Indexer();
-
-  const bm25Scorer = new BM25Scorer();
-  const similarity = new CosineSimilarity();
-  const fusion = new SimpleFusion();
 
   const chunker = new FixedSizeChunker();
 
@@ -57,6 +57,8 @@ export function createEvaluationContainer(): EvaluationContainer {
 
     retrievalDependencies: {
       processor,
+      tracer,
+      reranker,
 
       documentStore,
       chunkStore,
@@ -65,9 +67,6 @@ export function createEvaluationContainer(): EvaluationContainer {
       embeddingStore,
 
       bm25Indexer,
-      bm25Scorer,
-      similarity,
-      fusion,
     },
   };
 }

@@ -1,57 +1,38 @@
 import cases from "./cases.json";
 
 import { createEvaluationContainer } from "../src/bootstrap/createEvaluationContainer";
-import { seedKnowledge } from "./fixtures";
+import { seedKnowledge } from "./seedKnowledge";
 import { createHybridRetrievalEngine } from "../src/engines/retrieval/factories/create-hybrid-engine";
+import { recallAtK } from "./metrics/ndcg";
+import { mean, reciprocalRank } from "./metrics/mrr";
 
 export async function runHybridEvaluation() {
   const container = createEvaluationContainer();
 
   await seedKnowledge(container.knowledgeIngestionUseCase);
 
-  const retrievalEngine = createHybridRetrievalEngine(
-    container.retrievalDependencies,
-  );
+  const engine = createHybridRetrievalEngine(container.retrievalDependencies);
 
-  let success = 0;
-
-  console.log("\nAtlas RAG Evaluation\n");
+  const recallScores = [];
+  const mrrScores = [];
 
   for (const testCase of cases) {
-    const results = await retrievalEngine.retrieve(testCase.question);
+    const { results } = await engine.retrieve(testCase.question);
 
-    const found = results[0];
+    recallScores.push(recallAtK(results, testCase.expectedDocument, 5));
 
-    const passed = found?.document.title === testCase.expectedTitle;
+    mrrScores.push(reciprocalRank(results, testCase.expectedDocument));
 
-    if (passed) {
-      success++;
-    }
+    console.log({
+      question: testCase.question,
 
-    console.log(`
-      ${passed ? "✅" : "❌"}
-
-      Question:
-      ${testCase.question}
-
-      Expected:
-      ${testCase.expectedTitle}
-
-      Found:
-      ${found?.document.id ?? "none"}
-
-      Top result:
-      ${found?.document.title}
-
-      Source:
-      ${found?.source}
-
-      Score:
-      ${found?.score ?? 0}
-    `);
+      top: results.map((x) => x.document.title),
+    });
   }
 
-  console.log(`
-    Accuracy: ${((success / cases.length) * 100).toFixed(1)}%
-  `);
+  console.log({
+    recallAt5: mean(recallScores),
+
+    mrr: mean(mrrScores),
+  });
 }

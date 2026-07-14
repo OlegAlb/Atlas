@@ -7,6 +7,11 @@ export function createDenseRetrievalEngine(deps: RetrievalDependencies) {
   const { denseRetriever } = createRetrievers(deps);
 
   return new RetrievalEngine(
-    createRetrievalPipeline(denseRetriever, deps.processor),
+    createRetrievalPipeline(
+      denseRetriever,
+      deps.reranker,
+      deps.processor,
+      deps.tracer,
+    ),
   );
 }
