@@ -8,10 +8,11 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "eval": "tsx apps/api/eval/index.ts",
+    "eval:ingestion": "tsx apps/api/eval/index.ts --ingestion",
+    "eval:retrieval": "tsx apps/api/eval/index.ts --retrieval",
     "eval:hybrid": "tsx apps/api/eval/index.ts --hybrid",
     "eval:dense": "tsx apps/api/eval/index.ts --dense",
-    "eval:bm25": "tsx apps/api/eval/index.ts --bm25",
-    "eval:document": "tsx apps/api/eval/documents/run-document-eval.ts"
+    "eval:bm25": "tsx apps/api/eval/index.ts --bm25"
   },
   "keywords": [],
   "author": "",

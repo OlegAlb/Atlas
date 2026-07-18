@@ -11,7 +11,7 @@ async function start() {
     host: "0.0.0.0",
   });
 
-  app.log.info(`🚀 Atlas API listening on http://localhost:${port}`);
+  app.log.info(`Atlas API listening on http://localhost:${port}`);
 }
 
 start();

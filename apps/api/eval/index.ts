@@ -1,33 +1,72 @@
-import { runHybridEvaluation } from "./run-hybrid-evaluation";
-import { runDenseEvaluation } from "./run-dense-evaluation";
 import { parseArgs } from "node:util";
-import { runBM25Evaluation } from "./run-bm25-evaluation";
+
+import { runRetrievalEvaluation } from "./runners/run-retrieval-eval";
+import { RetrievalType } from "./retrieval/create-evaluation-engine";
+import { runIngestionEvaluation } from "./runners/run-document-eval";
 
 async function main() {
   const { values } = parseArgs({
     options: {
-      hybrid: { type: "boolean" },
-      dense: { type: "boolean" },
-      bm25: { type: "boolean" },
+      ingestion: {
+        type: "boolean",
+      },
+
+      retrieval: {
+        type: "boolean",
+      },
+
+      hybrid: {
+        type: "boolean",
+      },
+
+      dense: {
+        type: "boolean",
+      },
+
+      bm25: {
+        type: "boolean",
+      },
     },
   });
 
-  const runAll = !values.hybrid && !values.dense && !values.bm25;
+  const runAll =
+    !values.ingestion &&
+    !values.retrieval &&
+    !values.hybrid &&
+    !values.dense &&
+    !values.bm25;
 
-  if (runAll || values.hybrid) {
-    await runHybridEvaluation();
+  const engines: RetrievalType[] = [];
+
+  if (values.hybrid) {
+    engines.push("hybrid");
   }
 
-  if (runAll || values.dense) {
-    await runDenseEvaluation();
+  if (values.dense) {
+    engines.push("dense");
   }
 
-  if (runAll || values.bm25) {
-    await runBM25Evaluation();
+  if (values.bm25) {
+    engines.push("bm25");
+  }
+
+  const runAllRetrieval = runAll || values.retrieval;
+
+  if (runAllRetrieval && engines.length === 0) {
+    engines.push("hybrid", "dense", "bm25");
+  }
+
+  if (runAll || values.ingestion) {
+    await runIngestionEvaluation();
+  }
+
+  for (const engine of engines) {
+    await runRetrievalEvaluation(engine);
   }
 }
 
-main().catch((err) => {
-  console.error("Ошибка при выполнении:", err);
+main().catch((error) => {
+  console.error(error);
+
   process.exit(1);
 });

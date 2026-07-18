@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ingestion-001",
+    "name": "plain text refund policy",
+    "fixture": "simple.txt",
+    "input": {
+      "title": "Политика возврата"
+    },
+    "expected": {
+      "mimeType": "text/plain",
+      "contains": ["14 дней", "сохранена упаковка"]
+    }
+  },
+  {
+    "id": "ingestion-002",
+    "name": "long document chunking",
+    "fixture": "long.txt",
+    "input": {
+      "title": "Политика возврата товаров"
+    },
+    "expected": {
+      "mimeType": "text/plain",
+      "contains": ["Раздел 1", "Возврат денежных средств"],
+      "chunks": {
+        "min": 3,
+        "max": 20
+      }
+    }
+  }
+]

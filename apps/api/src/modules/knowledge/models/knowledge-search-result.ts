@@ -1,4 +1,4 @@
-import { KnowledgeDocument } from "../../documents/models/document";
+import { KnowledgeDocument } from "../../document/models/document";
 import { KnowledgeChunk } from "./knowledge-chunk";
 
 export interface KnowledgeSearchResult {
