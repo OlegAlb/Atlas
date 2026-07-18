@@ -6,10 +6,6 @@ import { seedKnowledge } from "./seedKnowledge";
 export async function runBM25Evaluation() {
   const container = createEvaluationContainer();
 
-  //   dependencies.bm25Retriever,
-  // dependencies.processor,
-  // dependencies.tracer,
-
   await seedKnowledge(container.knowledgeIngestionUseCase);
 
   const retrievalEngine = createBM25RetrievalEngine(

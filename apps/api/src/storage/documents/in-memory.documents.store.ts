@@ -1,12 +1,18 @@
-import { DocumentStore } from "./document.store";
-
-import { KnowledgeDocument } from "../../modules/knowledge/knowledge.types";
+import { KnowledgeDocument } from "../../modules/document/models/document";
+import { DocumentStore } from "./documents.store";
 
 export class InMemoryDocumentStore implements DocumentStore {
   private readonly documents: KnowledgeDocument[] = [];
 
-  async save(document: KnowledgeDocument): Promise<void> {
-    this.documents.push(document);
+  async save(document: KnowledgeDocument): Promise<KnowledgeDocument> {
+    const stored = {
+      ...document,
+      id: crypto.randomUUID(),
+    };
+
+    this.documents.push(stored);
+
+    return stored;
   }
 
   async list(): Promise<KnowledgeDocument[]> {

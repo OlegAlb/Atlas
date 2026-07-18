@@ -1,7 +1,7 @@
 import { EmbeddingProvider } from "../../../infrastructure/embedding/embedding.provider";
-import { KnowledgeSearchResult } from "../../../modules/knowledge/knowledge.types";
+import { KnowledgeSearchResult } from "../../../modules/knowledge/models/knowledge-search-result";
 import { ChunkStore } from "../../../storage/chunks/chunk.store";
-import { DocumentStore } from "../../../storage/documents/document.store";
+import { DocumentStore } from "../../../storage/documents/documents.store";
 import { EmbeddingStore } from "../../../storage/embeddings/embedding.store";
 import { Similarity } from "../../embeddings/similarity/similarity";
 import { RetrievalContext } from "../pipeline/context";

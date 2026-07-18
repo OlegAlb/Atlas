@@ -1,6 +1,6 @@
 export interface KnowledgeMetadata {
-  source: string;
   mimeType: string;
+  source?: string;
   language?: string;
   createdAt?: Date;
   updatedAt?: Date;

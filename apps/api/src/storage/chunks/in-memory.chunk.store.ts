@@ -1,4 +1,4 @@
-import { KnowledgeChunk } from "../../modules/knowledge/knowledge.types";
+import { KnowledgeChunk } from "../../modules/knowledge/models/knowledge-chunk";
 import { ChunkStore } from "./chunk.store";
 
 export class InMemoryChunkStore implements ChunkStore {

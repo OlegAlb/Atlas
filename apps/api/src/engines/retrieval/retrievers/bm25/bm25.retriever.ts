@@ -1,12 +1,11 @@
-import { KnowledgeSearchResult } from "../../../../modules/knowledge/knowledge.types";
+import { KnowledgeSearchResult } from "../../../../modules/knowledge/models/knowledge-search-result";
 import { ChunkStore } from "../../../../storage/chunks/chunk.store";
-import { DocumentStore } from "../../../../storage/documents/document.store";
+import { DocumentStore } from "../../../../storage/documents/documents.store";
 import { RetrievalContext } from "../../pipeline/context";
 import { Retriever } from "../retriever";
 import { BM25Indexer } from "./bm25.indexer";
 import { BM25Scorer } from "./bm25.scorer";
 import { tokenize } from "./bm25.utils";
-import { InMemoryBM25Indexer } from "./in-memory-bm25.indexer";
 
 export class BM25Retriever implements Retriever {
   constructor(

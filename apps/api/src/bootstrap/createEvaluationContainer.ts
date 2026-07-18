@@ -1,4 +1,3 @@
-import { FixedSizeChunker } from "../modules/chunking/fixed-size.chunker";
 import { KnowledgeIngestionUseCase } from "../modules/knowledge/knowledge.ingestion.usecase";
 
 import { EmbeddingIndexer } from "../engines/embeddings/embedding.indexer";
@@ -8,11 +7,11 @@ import { QueryProcessor } from "../engines/retrieval/query/query.processor";
 import { InMemoryBM25Indexer } from "../engines/retrieval/retrievers/bm25/in-memory-bm25.indexer";
 import { createEmbeddingProvider } from "../infrastructure/embedding/embedding.factory";
 import { KnowledgeIndexer } from "../modules/knowledge/knowledge.indexer";
-import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
-import { InMemoryDocumentStore } from "../storage/documents/in-memory.document.store";
-import { InMemoryEmbeddingStore } from "../storage/embeddings/in-memory.embedding.store";
-import { NoopReranker } from "../modules/rerankers/noop.reranker";
 import { createNoopReranker } from "../modules/rerankers/reranker.factory";
+import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
+import { InMemoryDocumentStore } from "../storage/documents/in-memory.documents.store";
+import { InMemoryEmbeddingStore } from "../storage/embeddings/in-memory.embedding.store";
+import { RecursiveChunker } from "../modules/chunking";
 
 export interface EvaluationContainer {
   knowledgeIngestionUseCase: KnowledgeIngestionUseCase;
@@ -36,7 +35,7 @@ export function createEvaluationContainer(): EvaluationContainer {
 
   const bm25Indexer = new InMemoryBM25Indexer();
 
-  const chunker = new FixedSizeChunker();
+  const chunker = new RecursiveChunker();
 
   const embeddingIndexer = new EmbeddingIndexer(
     embeddingProvider,

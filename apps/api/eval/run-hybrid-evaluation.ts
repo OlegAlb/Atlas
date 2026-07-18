@@ -25,14 +25,12 @@ export async function runHybridEvaluation() {
 
     console.log({
       question: testCase.question,
-
       top: results.map((x) => x.document.title),
     });
   }
 
   console.log({
     recallAt5: mean(recallScores),
-
     mrr: mean(mrrScores),
   });
 }

@@ -1,4 +1,4 @@
-import { DocumentStore } from "../../storage/documents/document.store";
+import { DocumentStore } from "../../storage/documents/documents.store";
 
 export class KnowledgeListUseCase {
   constructor(private readonly documentStore: DocumentStore) {}

@@ -1,10 +1,8 @@
 import { ChunkStore } from "../../storage/chunks/chunk.store";
-import { DocumentStore } from "../../storage/documents/document.store";
-import { ChunkCandidate, TextChunker } from "../chunking/text-chunker";
-import { CreateKnowledgeDocumentDTO } from "./knowledge.dto";
+import { DocumentStore } from "../../storage/documents/documents.store";
+import { Chunker } from "../chunking";
+import { KnowledgeDocument } from "../document/models/document";
 import { KnowledgeIndexer } from "./knowledge.indexer";
-import { KnowledgeDocument } from "./knowledge.types";
-import { KnowledgeAsset } from "./models/knowledge-asset";
 
 export interface IngestDocumentDTO {
   title: string;
@@ -13,59 +11,24 @@ export interface IngestDocumentDTO {
 
 export class KnowledgeIngestionUseCase {
   constructor(
-    private documentStore: DocumentStore,
-    private chunkStore: ChunkStore,
-    private chunker: TextChunker,
-    private knowledgeIndexer: KnowledgeIndexer,
+    private readonly documentStore: DocumentStore,
+    private readonly chunkStore: ChunkStore,
+    private readonly chunker: Chunker,
+    private readonly indexer: KnowledgeIndexer,
   ) {}
 
-  async execute(dto: CreateKnowledgeDocumentDTO) {
-    const document = this.createDocument(dto);
+  async execute(document: KnowledgeDocument) {
+    const storedDocument = await this.documentStore.save(document);
 
-    const asset: KnowledgeAsset = {
-      id: document.id,
-      title: document.title,
-      text: document.content,
-      metadata: {
-        source: "fixture",
-        mimeType: "text/plain",
-      },
-    };
-
-    const candidates = this.chunker.chunk(asset);
-
-    const chunks = candidates.map((candidate) =>
-      this.createChunk(candidate, document),
-    );
-
-    await this.documentStore.save(document);
+    const chunks = this.chunker.chunk(storedDocument);
 
     await this.chunkStore.save(chunks);
 
-    await this.knowledgeIndexer.index(chunks);
+    await this.indexer.index({
+      document: storedDocument,
+      chunks,
+    });
 
-    return {
-      documentId: document.id,
-      chunksCount: chunks.length,
-    };
-  }
-
-  private createDocument(dto: CreateKnowledgeDocumentDTO) {
-    return {
-      id: crypto.randomUUID(),
-      title: dto.title,
-      content: dto.content,
-      createdAt: new Date(),
-    };
-  }
-
-  private createChunk(candidate: ChunkCandidate, document: KnowledgeDocument) {
-    return {
-      id: crypto.randomUUID(),
-      documentId: document.id,
-      order: candidate.order,
-      text: candidate.text,
-      createdAt: new Date(),
-    };
+    return storedDocument;
   }
 }

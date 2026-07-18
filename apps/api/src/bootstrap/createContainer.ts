@@ -1,6 +1,5 @@
 import { ChatUseCase } from "../modules/chat/chat.usecase";
 
-import { FixedSizeChunker } from "../modules/chunking/fixed-size.chunker";
 import { InMemoryConversationMemory } from "../modules/conversation/in-memory-conversation.memory";
 import { KnowledgeIngestionUseCase } from "../modules/knowledge/knowledge.ingestion.usecase";
 import { KnowledgeListUseCase } from "../modules/knowledge/knowledge.list.usecase";
@@ -8,14 +7,21 @@ import { KnowledgeService } from "../modules/knowledge/knowledge.service";
 
 import { EmbeddingIndexer } from "../engines/embeddings/embedding.indexer";
 import { createHybridRetrievalEngine } from "../engines/retrieval/factories/create-hybrid-engine";
+import { RetrievalTracer } from "../engines/retrieval/observability/retrieval.trace";
 import { QueryProcessor } from "../engines/retrieval/query/query.processor";
 import { InMemoryBM25Indexer } from "../engines/retrieval/retrievers/bm25/in-memory-bm25.indexer";
 import { createEmbeddingProvider } from "../infrastructure/embedding/embedding.factory";
 import { createLLMProvider } from "../infrastructure/llm/llm.factory";
+import { MetadataMerger, RecursiveChunker } from "../modules/chunking";
+import {
+  createTokenizer,
+  TokenizerType,
+} from "../modules/chunking/tokenizer/tokenizer.factory";
 import { KnowledgeIndexer } from "../modules/knowledge/knowledge.indexer";
+import { NoopReranker } from "../modules/rerankers/noop.reranker";
 import { InMemoryChunkStore } from "../storage/chunks/in-memory.chunk.store";
-import { InMemoryDocumentStore } from "../storage/documents/in-memory.document.store";
 import { InMemoryEmbeddingStore } from "../storage/embeddings/in-memory.embedding.store";
+import { InMemoryDocumentStore } from "../storage/documents/in-memory.documents.store";
 
 export interface AppContainer {
   chatUseCase: ChatUseCase;
@@ -32,9 +38,17 @@ export function createContainer(): AppContainer {
 
   const chunkStore = new InMemoryChunkStore();
 
-  const chunker = new FixedSizeChunker();
+  const tokenizer = createTokenizer(TokenizerType.GPT);
+
+  const metadataMerger = new MetadataMerger();
+
+  const chunker = new RecursiveChunker(tokenizer, metadataMerger);
 
   const processor = new QueryProcessor();
+
+  const tracer = new RetrievalTracer();
+
+  const reranker = new NoopReranker();
 
   const embeddingProvider = createEmbeddingProvider();
 
@@ -43,6 +57,8 @@ export function createContainer(): AppContainer {
   const bm25Indexer = new InMemoryBM25Indexer();
 
   const retrievalDependencies = {
+    tracer,
+    reranker,
     processor,
 
     documentStore,

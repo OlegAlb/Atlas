@@ -1,4 +1,4 @@
-import { KnowledgeChunk } from "../../modules/knowledge/knowledge.types";
+import { KnowledgeChunk } from "../../modules/knowledge/models/knowledge-chunk";
 
 export interface ChunkStore {
   save(chunks: KnowledgeChunk[]): Promise<void>;

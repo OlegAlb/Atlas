@@ -1,7 +1,7 @@
-import { KnowledgeDocument } from "../../modules/knowledge/knowledge.types";
+import { KnowledgeDocument } from "../../modules/document/models/document";
 
 export interface DocumentStore {
-  save(document: KnowledgeDocument): Promise<void>;
+  save(document: KnowledgeDocument): Promise<KnowledgeDocument>;
 
   list(): Promise<KnowledgeDocument[]>;
 

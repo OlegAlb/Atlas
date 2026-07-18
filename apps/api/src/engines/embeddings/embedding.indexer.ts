@@ -1,10 +1,6 @@
 import { EmbeddingStore } from "../../storage/embeddings/embedding.store";
 import { EmbeddingProvider } from "../../infrastructure/embedding/embedding.provider";
-
-export interface EmbeddingIndexItem {
-  id: string;
-  text: string;
-}
+import { KnowledgeChunk } from "../../modules/knowledge/models/knowledge-chunk";
 
 export class EmbeddingIndexer {
   constructor(
@@ -12,7 +8,7 @@ export class EmbeddingIndexer {
     private embeddingStore: EmbeddingStore,
   ) {}
 
-  async index(items: EmbeddingIndexItem[]) {
+  async index(items: KnowledgeChunk[]) {
     const embeddings = await this.embeddingProvider.embedMany(
       items.map((item) => item.text),
     );

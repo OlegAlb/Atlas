@@ -1,6 +1,11 @@
-import { EmbeddingIndexer } from "../../engines/embeddings/embedding.indexer";
 import { BM25Indexer } from "../../engines/retrieval/retrievers/bm25/bm25.indexer";
-import { KnowledgeChunk } from "./knowledge.types";
+import { KnowledgeDocument } from "../document/models/document";
+import { KnowledgeChunk } from "./models/knowledge-chunk";
+
+export interface IndexPayload {
+  document: KnowledgeDocument;
+  chunks: KnowledgeChunk[];
+}
 
 export class KnowledgeIndexer {
   constructor(
@@ -8,9 +13,9 @@ export class KnowledgeIndexer {
     private readonly bm25Indexer: BM25Indexer,
   ) {}
 
-  async index(chunks: KnowledgeChunk[]) {
-    await this.embeddingIndexer.index(chunks);
+  async index(payload: IndexPayload) {
+    await this.embeddingIndexer.index(payload.chunks);
 
-    this.bm25Indexer.add(chunks);
+    this.bm25Indexer.add(payload.chunks);
   }
 }

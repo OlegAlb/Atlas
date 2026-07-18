@@ -1,4 +1,5 @@
-import { KnowledgeChunk, KnowledgeDocument } from "./knowledge.types";
+import { KnowledgeDocument } from "../documents/models/document";
+import { KnowledgeChunk } from "./models/knowledge-chunk";
 
 export interface KnowledgeRepository {
   save(document: KnowledgeDocument, chunks: KnowledgeChunk[]): Promise<void>;

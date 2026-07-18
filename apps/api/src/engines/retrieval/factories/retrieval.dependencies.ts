@@ -1,7 +1,7 @@
 import { EmbeddingProvider } from "../../../infrastructure/embedding/embedding.provider";
 import { Reranker } from "../../../modules/rerankers/reranker";
 import { ChunkStore } from "../../../storage/chunks/chunk.store";
-import { DocumentStore } from "../../../storage/documents/document.store";
+import { DocumentStore } from "../../../storage/documents/documents.store";
 import { EmbeddingStore } from "../../../storage/embeddings/embedding.store";
 import { RetrievalTracer } from "../observability/retrieval.trace";
 import { QueryProcessor } from "../query/query.processor";

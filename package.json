@@ -10,7 +10,8 @@
     "eval": "tsx apps/api/eval/index.ts",
     "eval:hybrid": "tsx apps/api/eval/index.ts --hybrid",
     "eval:dense": "tsx apps/api/eval/index.ts --dense",
-    "eval:bm25": "tsx apps/api/eval/index.ts --bm25"
+    "eval:bm25": "tsx apps/api/eval/index.ts --bm25",
+    "eval:document": "tsx apps/api/eval/documents/run-document-eval.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
     "fastify-plugin": "^6.0.0",
+    "tiktoken": "^1.0.22",
     "zod": "^4.4.3"
   },
   "devDependencies": {
