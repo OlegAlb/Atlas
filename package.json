@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch apps/api/src/server.ts",
+    "dev": "tsx watch apps/core/src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "eval": "tsx apps/api/eval/index.ts",
-    "eval:ingestion": "tsx apps/api/eval/index.ts --ingestion",
-    "eval:retrieval": "tsx apps/api/eval/index.ts --retrieval",
-    "eval:hybrid": "tsx apps/api/eval/index.ts --hybrid",
-    "eval:dense": "tsx apps/api/eval/index.ts --dense",
-    "eval:bm25": "tsx apps/api/eval/index.ts --bm25"
+    "eval": "tsx apps/core/eval/index.ts",
+    "eval:ingestion": "tsx apps/core/eval/index.ts --ingestion",
+    "eval:retrieval": "tsx apps/core/eval/index.ts --retrieval",
+    "eval:hybrid": "tsx apps/core/eval/index.ts --hybrid",
+    "eval:dense": "tsx apps/core/eval/index.ts --dense",
+    "eval:bm25": "tsx apps/core/eval/index.ts --bm25"
   },
   "keywords": [],
   "author": "",

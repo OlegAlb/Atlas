@@ -1,0 +1,257 @@
+[
+  {
+    "id": "case-001",
+    "query": "Какими способами можно оплатить заказ?",
+    "relevantDocuments": ["order-payment"]
+  },
+  {
+    "id": "case-002",
+    "query": "Можно оплатить через СБП?",
+    "relevantDocuments": ["order-payment"]
+  },
+  {
+    "id": "case-003",
+    "query": "Карта не проходит при оплате, что делать?",
+    "relevantDocuments": ["payment-issues"]
+  },
+  {
+    "id": "case-004",
+    "query": "Почему платеж отклоняется?",
+    "relevantDocuments": ["payment-issues"]
+  },
+  {
+    "id": "case-005",
+    "query": "Мой заказ где сейчас?",
+    "relevantDocuments": ["order-status"]
+  },
+  {
+    "id": "case-006",
+    "query": "Когда придет мой заказ?",
+    "relevantDocuments": ["delivery-times"]
+  },
+  {
+    "id": "case-007",
+    "query": "Где посмотреть статус покупки?",
+    "relevantDocuments": ["order-status"]
+  },
+  {
+    "id": "case-008",
+    "query": "Как узнать, отправили ли мой товар?",
+    "relevantDocuments": ["delivery-tracking"]
+  },
+  {
+    "id": "case-009",
+    "query": "Я хочу отказаться от покупки",
+    "relevantDocuments": ["order-cancellation"]
+  },
+  {
+    "id": "case-010",
+    "query": "Можно отменить заказ?",
+    "relevantDocuments": ["order-cancellation"]
+  },
+  {
+    "id": "case-011",
+    "query": "Я случайно заказал не то, можно вернуть?",
+    "relevantDocuments": ["product-return"]
+  },
+  {
+    "id": "case-012",
+    "query": "Мне деньги назад получить можно?",
+    "relevantDocuments": ["refund"]
+  },
+  {
+    "id": "case-013",
+    "query": "Когда вернут деньги за товар?",
+    "relevantDocuments": ["refund"]
+  },
+  {
+    "id": "case-014",
+    "query": "Как оформить возврат?",
+    "relevantDocuments": ["product-return"]
+  },
+  {
+    "id": "case-015",
+    "query": "Товар не подошел, хочу вернуть",
+    "relevantDocuments": ["product-return"]
+  },
+  {
+    "id": "case-016",
+    "query": "Через сколько дней можно вернуть покупку?",
+    "relevantDocuments": ["product-return"]
+  },
+  {
+    "id": "case-017",
+    "query": "Можно поменять размер?",
+    "relevantDocuments": ["product-exchange"]
+  },
+  {
+    "id": "case-018",
+    "query": "Мне нужен другой товар вместо этого",
+    "relevantDocuments": ["product-exchange"]
+  },
+  {
+    "id": "case-019",
+    "query": "Есть скидочный код?",
+    "relevantDocuments": ["promo-codes"]
+  },
+  {
+    "id": "case-020",
+    "query": "Куда вводить промокод?",
+    "relevantDocuments": ["promo-codes"]
+  },
+  {
+    "id": "case-021",
+    "query": "Почему мой купон не работает?",
+    "relevantDocuments": ["promo-codes"]
+  },
+  {
+    "id": "case-022",
+    "query": "Какие сейчас есть акции?",
+    "relevantDocuments": ["discounts-and-promotions"]
+  },
+  {
+    "id": "case-023",
+    "query": "Можно ли использовать два промокода?",
+    "relevantDocuments": ["promo-codes"]
+  },
+  {
+    "id": "case-024",
+    "query": "Как зарегистрироваться?",
+    "relevantDocuments": ["account-registration"]
+  },
+  {
+    "id": "case-025",
+    "query": "Хочу создать профиль",
+    "relevantDocuments": ["account-registration"]
+  },
+  {
+    "id": "case-026",
+    "query": "Не могу войти, забыл пароль",
+    "relevantDocuments": ["password-reset"]
+  },
+  {
+    "id": "case-027",
+    "query": "Как поменять свои данные?",
+    "relevantDocuments": ["account-details-update"]
+  },
+  {
+    "id": "case-028",
+    "query": "Где мои прошлые заказы?",
+    "relevantDocuments": ["user-account"]
+  },
+  {
+    "id": "case-029",
+    "query": "Как удалить учетную запись?",
+    "relevantDocuments": ["account-deletion"]
+  },
+  {
+    "id": "case-030",
+    "query": "Хочу отключить рассылку",
+    "relevantDocuments": ["newsletter-subscription"]
+  },
+  {
+    "id": "case-031",
+    "query": "Как отменить премиум?",
+    "relevantDocuments": ["subscription-cancellation"]
+  },
+  {
+    "id": "case-032",
+    "query": "Сколько стоит подписка?",
+    "relevantDocuments": ["premium-subscription"]
+  },
+  {
+    "id": "case-033",
+    "query": "Можно отключить автоматическую оплату?",
+    "relevantDocuments": ["subscription-cancellation"]
+  },
+  {
+    "id": "case-034",
+    "query": "Как добавить товар в заказ?",
+    "relevantDocuments": ["order-modification"]
+  },
+  {
+    "id": "case-035",
+    "query": "Я хочу изменить заказ",
+    "relevantDocuments": ["order-modification"]
+  },
+  {
+    "id": "case-036",
+    "query": "Где находится моя корзина?",
+    "relevantDocuments": ["shopping-cart"]
+  },
+  {
+    "id": "case-037",
+    "query": "Как сделать покупку?",
+    "relevantDocuments": ["checkout"]
+  },
+  {
+    "id": "case-038",
+    "query": "Как получить заказ?",
+    "relevantDocuments": ["pickup-points"]
+  },
+  {
+    "id": "case-039",
+    "query": "Есть доставка курьером?",
+    "relevantDocuments": ["order-delivery"]
+  },
+  {
+    "id": "case-040",
+    "query": "Сколько ждать доставку?",
+    "relevantDocuments": ["delivery-times"]
+  },
+  {
+    "id": "case-041",
+    "query": "Можно забрать самому?",
+    "relevantDocuments": ["pickup-points"]
+  },
+  {
+    "id": "case-042",
+    "query": "Где мой трек номер?",
+    "relevantDocuments": ["delivery-tracking"]
+  },
+  {
+    "id": "case-043",
+    "query": "Почему доставка задерживается?",
+    "relevantDocuments": ["delivery-times"]
+  },
+  {
+    "id": "case-044",
+    "query": "Можно оставить отзыв?",
+    "relevantDocuments": ["product-reviews"]
+  },
+  {
+    "id": "case-045",
+    "query": "Есть гарантия?",
+    "relevantDocuments": ["product-warranty"]
+  },
+  {
+    "id": "case-046",
+    "query": "Куда писать если проблема?",
+    "relevantDocuments": ["customer-support"]
+  },
+  {
+    "id": "case-047",
+    "query": "Мне пришло сообщение о заказе",
+    "relevantDocuments": ["order-notifications"]
+  },
+  {
+    "id": "case-048",
+    "query": "Мой заказ еще не пришел, что делать?",
+    "relevantDocuments": ["order-status"]
+  },
+  {
+    "id": "case-049",
+    "query": "Мне пришел бракованный товар",
+    "relevantDocuments": ["product-warranty"]
+  },
+  {
+    "id": "case-050",
+    "query": "Хочу вернуть деньги за подписку",
+    "relevantDocuments": ["subscription-cancellation"]
+  },
+  {
+    "id": "case-051",
+    "query": "Можно изменить адрес доставки?",
+    "relevantDocuments": ["order-modification"]
+  }
+]
