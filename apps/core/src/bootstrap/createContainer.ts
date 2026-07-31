@@ -3,29 +3,31 @@ import { ChatUseCase } from "../application/chat/chat.usecase";
 import { KnowledgeIngestionUseCase } from "../application/knowledge/knowledge.ingestion.usecase";
 import { KnowledgeService } from "../application/knowledge/knowledge.service";
 
-import { EmbeddingIndexer } from "../infrastructure/embedding/embedding.indexer";
-import { createEmbeddingProvider } from "../infrastructure/embedding/embedding.factory";
-import { createLLMProvider } from "../infrastructure/llm/llm.factory";
+import { EmbeddingIndexer } from "../application/knowledge/indexing/embedding.indexer";
 
-import { KnowledgeIndexer } from "../application/knowledge/knowledge.indexer";
+import { KnowledgeIndexer } from "../application/knowledge/indexing/knowledge.indexer";
+import { KnowledgeCreateUseCase } from "../application/knowledge/knowledge.create.usecase";
 import { KnowledgeListUseCase } from "../application/knowledge/knowledge.list.usecase";
-import { InMemoryConversationMemory } from "../infrastructure/conversation/in-memory-conversation.memory";
-import { InMemoryDocumentStore } from "../infrastructure/storage/documents/in-memory.document.store";
-import { InMemoryChunkStore } from "../infrastructure/storage/chunks/in-memory.chunk.store";
+import { MetadataMerger, RecursiveChunker } from "../chunking";
 import {
   createTokenizer,
   TokenizerType,
 } from "../chunking/tokenizer/tokenizer.factory";
-import { MetadataMerger, RecursiveChunker } from "../chunking";
-import { QueryProcessor } from "../retrieval/query/query.processor";
-import { RetrievalTracer } from "../retrieval/observability/retrieval.trace";
-import { NoopReranker } from "../infrastructure/rerankers/noop.reranker";
-import { InMemoryEmbeddingStore } from "../infrastructure/storage/embeddings/in-memory.embedding.store";
-import { InMemoryBM25Indexer } from "../retrieval/retrievers/bm25/in-memory-bm25.indexer";
-import { createHybridRetrievalEngine } from "../retrieval/factories/create-hybrid-engine";
-import { KnowledgeCreateUseCase } from "../application/knowledge/knowledge.create.usecase";
+import { env } from "../config/env";
+import { InMemoryConversationMemory } from "../infrastructure/conversation/in-memory-conversation.memory";
 import { PlainTextLoader } from "../infrastructure/loaders/plain-text.loader";
 import { PlainTextParser } from "../infrastructure/parsers/plain-text.parser";
+import { InMemoryChunkStore } from "../infrastructure/storage/chunks/in-memory.chunk.store";
+import { InMemoryDocumentStore } from "../infrastructure/storage/documents/in-memory.document.store";
+import { InMemoryEmbeddingStore } from "../infrastructure/storage/embeddings/in-memory.embedding.store";
+import { createEmbeddingProvider } from "../providers/embedding/embedding.factory";
+import { createLLMProvider } from "../providers/llm/llm.factory";
+import { createHybridSearchEngine } from "../search/factories/create-hybrid-search-engine";
+import { SearchTracer } from "../search/observability/search.trace";
+import { QueryProcessor } from "../search/query/query.processor";
+import { createReranker } from "../search/reranking/create-reranker";
+import { InMemoryBM25Indexer } from "../search/retrievers/bm25/in-memory-bm25.indexer";
+import { InMemoryEmbeddingCache } from "../providers/embedding/cache/in-memory.embedding.cache";
 
 export interface AppContainer {
   chatUseCase: ChatUseCase;
@@ -50,9 +52,9 @@ export function createContainer(): AppContainer {
 
   const processor = new QueryProcessor();
 
-  const tracer = new RetrievalTracer();
+  const tracer = new SearchTracer();
 
-  const reranker = new NoopReranker();
+  const reranker = createReranker();
 
   const embeddingProvider = createEmbeddingProvider();
 
@@ -60,7 +62,7 @@ export function createContainer(): AppContainer {
 
   const bm25Indexer = new InMemoryBM25Indexer();
 
-  const retrievalDependencies = {
+  const searchDependencies = {
     tracer,
     reranker,
     processor,
@@ -74,13 +76,16 @@ export function createContainer(): AppContainer {
     bm25Indexer,
   };
 
-  const retrievalEngine = createHybridRetrievalEngine(retrievalDependencies);
+  const retrieval = createHybridSearchEngine(searchDependencies);
 
-  const knowledgeService = new KnowledgeService(retrievalEngine);
+  const knowledgeService = new KnowledgeService(retrieval);
+
+  const embeddingCache = new InMemoryEmbeddingCache();
 
   const embeddingIndexer = new EmbeddingIndexer(
     embeddingProvider,
     embeddingStore,
+    embeddingCache,
   );
 
   const knowledgeIndexer = new KnowledgeIndexer(embeddingIndexer, bm25Indexer);

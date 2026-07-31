@@ -1,4 +1,4 @@
-import { SourceDocument } from "../models/document";
+import { SourceDocument } from "../../domain/document/models/document";
 import { DocumentParser } from "./document-parser";
 
 export class DocumentParserRegistry {

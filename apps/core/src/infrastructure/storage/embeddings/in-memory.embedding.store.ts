@@ -1,4 +1,4 @@
-import { Embedding } from "../../embedding/provider/embedding.provider";
+import { Embedding } from "../../../providers/embedding/providers/embedding.provider";
 import { EmbeddingStore } from "./embedding.store";
 
 export interface StoredEmbedding {

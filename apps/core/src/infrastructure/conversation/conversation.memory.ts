@@ -1,4 +1,4 @@
-import { LLMMessage } from "../../infrastructure/llm/llm.provider";
+import { LLMMessage } from "../../providers/llm/providers/llm.provider";
 
 export interface ConversationMemory {
   get(conversationId: string): Promise<LLMMessage[]>;

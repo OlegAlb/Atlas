@@ -9,10 +9,10 @@
 [x] Recursive chunking
 [x] Chunk metadata
 
-## Retrieval
+## SearchEngine
 
-[ ] Retrieval audit
-[ ] Retrieval evaluation
+[ ] SearchEngine audit
+[ ] SearchEngine evaluation
 [ ] Dense retrieval production storage
 [ ] Hybrid retrieval validation
 [ ] Cross encoder reranking

@@ -28,29 +28,27 @@ Implemented:
 - Document ingestion flow
 - Document eval pipeline
 
-
 Pipeline:
 
 SourceDocument
-    |
-    v
+|
+v
 DocumentLoader
-    |
-    v
+|
+v
 DocumentParser
-    |
-    v
+|
+v
 KnowledgeDocument
-    |
-    v
+|
+v
 Chunker
-    |
-    v
+|
+v
 KnowledgeChunk
-    |
-    v
+|
+v
 Indexer
-
 
 ---
 
@@ -66,17 +64,15 @@ Implemented:
 - Metadata propagation
 - Chunk eval cases
 
-
 Current approach:
 
 - recursive splitting
 - separator based chunking
 - overlap support
 
-
 ---
 
-## Retrieval Engine
+## SearchEngine
 
 Status: partially completed
 
@@ -86,10 +82,9 @@ Implemented:
 - BM25 retrieval
 - Hybrid retrieval
 - Fusion strategies
-- Retrieval pipeline
+- SearchEngine pipeline
 - Query processing
 - Reranker abstraction
-
 
 Not completed:
 
@@ -97,7 +92,6 @@ Not completed:
 - cross encoder implementation
 - retrieval evaluation
 - production tuning
-
 
 ---
 

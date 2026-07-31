@@ -1,9 +1,9 @@
-import { RetrievalEngine } from "../../retrieval/retrieval.engine";
+import { SearchEngine } from "../../search/search.engine";
 
 export class KnowledgeService {
-  constructor(private readonly retrievalEngine: RetrievalEngine) {}
+  constructor(private readonly retrieval: SearchEngine) {}
 
-  retrieve(query: string) {
-    return this.retrievalEngine.retrieve(query);
+  search(query: string) {
+    return this.retrieval.search(query);
   }
 }

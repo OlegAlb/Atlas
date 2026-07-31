@@ -1,6 +1,6 @@
-import { RetrievalResult } from "../../retrieval/retrieval.models";
+import { SearchResult } from "../../retrieval/retrieval.models";
 
-export function recallAtK(result: RetrievalResult, k: number) {
+export function recallAtK(result: SearchResult, k: number) {
   const retrieved = result.retrievedDocuments
     .slice(0, k)
     .map((item) => item.id);

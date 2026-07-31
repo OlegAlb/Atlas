@@ -17,7 +17,7 @@
                     |
                     v
 
-            Retrieval Engine
+            SearchEngine
 
                     |
                     v

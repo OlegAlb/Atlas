@@ -1,6 +1,6 @@
 import { ChatRequestDTO } from "../../api/chat/chat.dto";
 import { ConversationMemory } from "../../infrastructure/conversation/conversation.memory";
-import { LLMMessage, LLMProvider } from "../../infrastructure/llm/llm.provider";
+import { LLMMessage, LLMProvider } from "../../providers/llm/providers/llm.provider";
 
 import { KnowledgeService } from "../knowledge/knowledge.service";
 
@@ -15,7 +15,7 @@ export class ChatUseCase {
 
   async execute(dto: ChatRequestDTO) {
     const history = await this.memory.get(dto.conversationId);
-    const context = await this.knowledge.retrieve(dto.message);
+    const context = await this.knowledge.search(dto.message);
 
     const knowledge = context.results
       .map((item) => item.chunk.text)

@@ -1,6 +1,6 @@
-import { RetrievalResult } from "../../retrieval/retrieval.models";
+import { SearchResult } from "../../retrieval/retrieval.models";
 
-export function ndcg(result: RetrievalResult, k: number) {
+export function ndcg(result: SearchResult, k: number) {
   const dcg = result.retrievedDocuments
     .slice(0, k)
     .reduce((sum, item, index) => {

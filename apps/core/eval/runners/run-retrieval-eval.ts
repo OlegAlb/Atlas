@@ -1,46 +1,52 @@
-import { RetrievalEvaluator } from "../retrieval/retrieval.evaluator";
-
 import { mean } from "../metrics/retrieval/mean";
 import { reciprocalRank } from "../metrics/retrieval/mrr";
 import { ndcg } from "../metrics/retrieval/ndcg";
 import { recallAtK } from "../metrics/retrieval/recall-at-k";
 
-import cases from "../datasets/retrieval/cases.json";
-
 import { createRetrievalEvaluationContainer } from "../bootstrap/createRetrievalEvaluationContainer";
-import {
-  createEvaluationRetrievalEngine,
-  RetrievalType,
-} from "../retrieval/create-evaluation-engine";
+
+import { createEvaluationSearchEngine } from "../search/create-evaluation";
+import { RetrievalEvaluator } from "../search/retrieval.evaluator";
 import { seedRetrievalDataset } from "../seed/seed-retrieval-dataset";
+import { EvaluationSearchConfig } from "../search/models/evaluation-search-config.model";
+import { getRetrievalCases } from "../datasets/loaders/retrieval-dataset.loader";
+import { getRetrievalCorpus } from "../datasets/loaders/retrieval-corpus.loader";
 
-export async function runRetrievalEvaluation(type: RetrievalType) {
-  const container = createRetrievalEvaluationContainer();
+export interface RetrievalEvaluationOptions {
+  datasetName: string;
+  config: EvaluationSearchConfig;
+}
 
-  await seedRetrievalDataset(container.knowledgeIngestionUseCase);
+export async function runRetrievalEvaluation(
+  options: RetrievalEvaluationOptions,
+) {
+  const container = createRetrievalEvaluationContainer(options.config);
 
-  const engine = createEvaluationRetrievalEngine(
-    type,
-    container.retrievalDependencies,
+  await seedRetrievalDataset(
+    container.knowledgeIngestionUseCase,
+    getRetrievalCorpus(options.datasetName),
+  );
+
+  const engine = createEvaluationSearchEngine(
+    options.config,
+    container.searchDependencies,
   );
 
   const evaluator = new RetrievalEvaluator(engine);
 
-  const results = await evaluator.evaluate(cases);
+  const results = await evaluator.evaluate(
+    getRetrievalCases(options.datasetName),
+  );
 
-  const recallScores = results.map((result) => recallAtK(result, 5));
-
-  const mrrScores = results.map(reciprocalRank);
-
-  const ndcgScores = results.map((result) => ndcg(result, 5));
-
-  console.log(`\n${type.toUpperCase()}`);
+  console.log(
+    `${options.datasetName} | ${options.config.search} + ${options.config.reranker}`,
+  );
 
   console.table({
-    recallAt5: mean(recallScores),
+    recallAt5: mean(results.map((result) => recallAtK(result, 5))),
 
-    mrr: mean(mrrScores),
+    mrr: mean(results.map(reciprocalRank)),
 
-    ndcg: mean(ndcgScores),
+    ndcg: mean(results.map((result) => ndcg(result, 5))),
   });
 }

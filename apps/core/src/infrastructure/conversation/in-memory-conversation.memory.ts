@@ -1,6 +1,5 @@
+import { LLMMessage } from "../../providers/llm/providers/llm.provider";
 import { ConversationMemory } from "./conversation.memory";
-
-import { LLMMessage } from "../../infrastructure/llm/llm.provider";
 
 export class InMemoryConversationMemory implements ConversationMemory {
   private conversations = new Map<string, LLMMessage[]>();

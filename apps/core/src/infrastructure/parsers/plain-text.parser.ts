@@ -1,5 +1,8 @@
 import { ContentType } from "../../chunking";
-import { SourceDocument } from "../../domain/document/models/document";
+import {
+  KnowledgeDocument,
+  SourceDocument,
+} from "../../domain/document/models/document";
 import { DocumentParser } from "./document-parser";
 
 export class PlainTextParser implements DocumentParser {

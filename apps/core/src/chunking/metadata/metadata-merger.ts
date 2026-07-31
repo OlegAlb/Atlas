@@ -1,4 +1,4 @@
-import { TextPiece } from "../../document/models/text-piece";
+import { TextPiece } from "../../domain/document/models/text-piece";
 
 export class MetadataMerger {
   merge(pieces: TextPiece[]) {

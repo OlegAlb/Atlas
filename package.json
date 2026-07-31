@@ -12,7 +12,10 @@
     "eval:retrieval": "tsx apps/core/eval/index.ts --retrieval",
     "eval:hybrid": "tsx apps/core/eval/index.ts --hybrid",
     "eval:dense": "tsx apps/core/eval/index.ts --dense",
-    "eval:bm25": "tsx apps/core/eval/index.ts --bm25"
+    "eval:bm25": "tsx apps/core/eval/index.ts --bm25",
+    "eval:jina": "tsx apps/core/eval/index.ts --reranker=jina",
+    "eval:noop": "tsx apps/core/eval/index.ts --reranker=noop",
+    "eval:reverse": "tsx apps/core/eval/index.ts --reranker=reverse"
   },
   "keywords": [],
   "author": "",

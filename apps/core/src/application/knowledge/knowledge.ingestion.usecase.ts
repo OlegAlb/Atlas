@@ -2,8 +2,7 @@ import { Chunker } from "../../chunking";
 import { KnowledgeDocument } from "../../domain/document/models/document";
 import { ChunkStore } from "../../infrastructure/storage/chunks/chunk.store";
 import { DocumentStore } from "../../infrastructure/storage/documents/document.store";
-import { EmbeddingStore } from "../../infrastructure/storage/embeddings/embedding.store";
-import { KnowledgeIndexer } from "./knowledge.indexer";
+import { KnowledgeIndexer } from "./indexing/knowledge.indexer";
 
 export interface IngestDocumentDTO {
   title: string;
@@ -16,7 +15,6 @@ export class KnowledgeIngestionUseCase {
     private readonly chunkStore: ChunkStore,
     private readonly chunker: Chunker,
     private readonly indexer: KnowledgeIndexer,
-    private readonly embeddingStore: EmbeddingStore,
   ) {}
 
   async execute(document: KnowledgeDocument) {

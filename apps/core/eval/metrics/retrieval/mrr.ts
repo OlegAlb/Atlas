@@ -1,6 +1,6 @@
-import { RetrievalResult } from "../../retrieval/retrieval.models";
+import { SearchResult } from "../../retrieval/retrieval.models";
 
-export function reciprocalRank(result: RetrievalResult) {
+export function reciprocalRank(result: SearchResult) {
   const index = result.retrievedDocuments.findIndex((item) =>
     result.relevantDocuments.includes(item.id),
   );

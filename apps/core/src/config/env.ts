@@ -9,9 +9,13 @@ const EnvSchema = z.object({
   LLM_API_KEY: z.string(),
   LLM_MODEL: z.string().default("openai/gpt-oss-120b"),
 
-  EMBEDDING_PROVIDER: z.enum(["jina", "fake"]).default("fake"),
+  EMBEDDING_PROVIDER: z.enum(["jina", "noop"]).default("jina"),
   EMBEDDING_API_KEY: z.string(),
   EMBEDDING_MODEL: z.string().default("jina-embeddings-v5-text-small"),
+
+  RERANKING_PROVIDER: z.enum(["jina", "noop"]).default("jina"),
+  RERANKING_API_KEY: z.string(),
+  RERANKING_MODEL: z.string().default("jina-reranker-v3"),
 });
 
 export const env = EnvSchema.parse(process.env);

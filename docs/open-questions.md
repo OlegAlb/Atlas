@@ -1,6 +1,6 @@
 # Open Questions
 
-## Retrieval
+## SearchEngine
 
 - Do we keep current retrieval engine structure?
 - Where should reranking live?
@@ -20,5 +20,5 @@
 
 ## Evaluation
 
-- Retrieval benchmark format?
+- SearchEngine benchmark format?
 - Golden datasets?
