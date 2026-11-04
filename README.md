@@ -134,10 +134,6 @@ What the numbers say:
 - On NFCorpus, nDCG@5 = 0.271 is in the expected range for a plain BM25
   baseline (published NFCorpus BM25 nDCG@10 ≈ 0.325).
 
-> Note: an earlier version of the evaluator had a `break` in its case loop, so
-> every config reported a perfect `1.000` computed on a single query. The numbers
-> above are from the fixed evaluator over the full query set.
-
 ## Tests
 
 ```bash
@@ -154,18 +150,15 @@ npm test
   scoring direction, and that rebuilding really resets the index
 - **reranker** — an empty candidate list must not reach the provider (a real
   crash: the API rejected an empty `documents` array with 422)
-- **evaluator** — must score every case, not the first one (regression test for
-  the bug described above)
+- **evaluator** — must score every case, not the first one
 
 Unit tests and benchmarks answer different questions: the benchmark says whether
 retrieval got better or worse, the tests say whether the pieces still behave as
-contracted. The `break` bug lived *inside* the benchmark — it happily reported a
-perfect score, and no evaluation run could have caught it.
+contracted.
 
 ## Known limitations
 
 - Storage is in-memory: restart loses documents, chunks and indexes
-- PostgreSQL/pgvector persistence was never implemented — the stub files were removed
 - Only plain-text ingestion; no PDF/DOCX/HTML
 - No auth, no rate limiting, no request validation error mapping
 - No end-to-end test of the HTTP layer or of the real provider clients
