@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/OlegAlb/Atlas/actions/workflows/ci.yml/badge.svg)](https://github.com/OlegAlb/Atlas/actions/workflows/ci.yml)
 
+**English** · [Русский](README.ru.md)
+
 A small RAG knowledge engine: ingest company documents, chunk them, index them
 with BM25 and embeddings, retrieve with a hybrid pipeline, rerank the candidates,
 and answer questions with an LLM.
