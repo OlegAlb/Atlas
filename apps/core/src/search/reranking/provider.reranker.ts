@@ -6,6 +6,10 @@ export class ProviderReranker implements Reranker {
   constructor(private readonly provider: RerankingProvider) {}
 
   async rerank(query: string, results: KnowledgeSearchResult[], limit = 5) {
+    if (results.length === 0) {
+      return [];
+    }
+
     const response = await this.provider.rerank({
       query,
       limit,

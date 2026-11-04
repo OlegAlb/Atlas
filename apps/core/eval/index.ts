@@ -15,7 +15,7 @@ const datasets = ["regression", "hard"] as const;
 
 function getRerankers(selected?: string): RerankerType[] {
   if (!selected) {
-    return availableRerankers;
+    return ["noop"];
   }
 
   if (!availableRerankers.includes(selected as RerankerType)) {

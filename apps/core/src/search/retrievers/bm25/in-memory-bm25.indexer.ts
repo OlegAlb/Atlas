@@ -13,6 +13,8 @@ export class InMemoryBM25Indexer implements BM25Indexer {
 
   averageDocumentLength = 0;
 
+  private statisticsDirty = false;
+
   build(chunks: KnowledgeChunk[]) {
     this.documents = [];
 
@@ -34,10 +36,16 @@ export class InMemoryBM25Indexer implements BM25Indexer {
 
     this.documents.push(...newDocuments);
 
-    this.calculateStatistics();
+    this.statisticsDirty = true;
   }
 
   getIndex(): BM25Index {
+    if (this.statisticsDirty) {
+      this.calculateStatistics();
+
+      this.statisticsDirty = false;
+    }
+
     return {
       documents: this.documents,
       documentFrequency: this.documentFrequency,

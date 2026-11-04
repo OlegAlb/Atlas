@@ -100,4 +100,13 @@ Not completed:
 - Storage is mostly in-memory
 - Embeddings are not persisted in pgvector
 - No production document formats except plain text
-- No retrieval quality metrics
+
+# Evaluation
+
+Retrieval quality is measured on two datasets (see `README.md` for the numbers):
+
+- `regression` — 30 support articles in Russian, 51 queries, hand-labeled
+- `hard` — NFCorpus test split: 3,633 abstracts, 323 labeled queries
+
+Run `npm run eval` for the free noop configuration, or pass `--reranker=jina`
+and set `EMBEDDING_PROVIDER=jina` for the real providers.

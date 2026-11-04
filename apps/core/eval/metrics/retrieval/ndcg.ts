@@ -1,4 +1,4 @@
-import { SearchResult } from "../../retrieval/retrieval.models";
+import { SearchResult } from "../../search/models/search-result.model";
 
 export function ndcg(result: SearchResult, k: number) {
   const dcg = result.retrievedDocuments

@@ -21,8 +21,6 @@ export class RetrievalEvaluator {
 
         retrievedDocuments: extractRetrievedDocuments(context.results),
       });
-
-      break;
     }
 
     return results;

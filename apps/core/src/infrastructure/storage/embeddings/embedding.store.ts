@@ -1,4 +1,4 @@
-import { Embedding } from "../../../providers/embedding/providers/embedding.provider";
+import { Embedding } from "../../../providers/embedding/models/embedding.model";
 
 export interface StoredEmbedding {
   chunkId: string;

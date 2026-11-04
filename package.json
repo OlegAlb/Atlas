@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "tsx watch apps/core/src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "eval": "tsx apps/core/eval/index.ts",
+    "fetch:data": "tsx scripts/fetch-nfcorpus.ts",
     "eval:ingestion": "tsx apps/core/eval/index.ts --ingestion",
     "eval:retrieval": "tsx apps/core/eval/index.ts --retrieval",
     "eval:hybrid": "tsx apps/core/eval/index.ts --hybrid",
@@ -18,8 +21,8 @@
     "eval:reverse": "tsx apps/core/eval/index.ts --reranker=reverse"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Oleg Albaut",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@fastify/cors": "^11.2.0",
@@ -35,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.1.0",
+    "fflate": "^0.8.3",
     "tsx": "^4.23.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"

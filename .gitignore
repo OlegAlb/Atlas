@@ -16,6 +16,9 @@ build/
 *.log
 npm-debug.log*
 
+# Данные бенчмарка NFCorpus (скачиваются через npm run fetch:data)
+apps/core/eval/datasets/retrieval/hard/corpus.json
+
 # Системные файлы (macOS и Windows)
 .DS_Store
 Thumbs.db

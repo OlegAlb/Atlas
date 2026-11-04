@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "CommonJS",
+    "moduleResolution": "Node10",
+    "ignoreDeprecations": "6.0",
+    "outDir": "dist",
+    "rootDir": "apps/core",
+    "resolveJsonModule": true,
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

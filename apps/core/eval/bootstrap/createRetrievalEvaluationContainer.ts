@@ -35,7 +35,10 @@ export function createRetrievalEvaluationContainer(
 
   const tracer = new SearchTracer();
 
-  const embeddingProvider = createEmbeddingProvider();
+  const embeddingProvider =
+    config.search === "bm25"
+      ? createEmbeddingProvider("noop")
+      : createEmbeddingProvider();
 
   const embeddingStore = new InMemoryEmbeddingStore();
 
