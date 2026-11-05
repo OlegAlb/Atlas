@@ -11,11 +11,8 @@ and answer questions with an LLM.
 The interesting part is not the LLM call — it is the retrieval layer and the
 evaluation harness around it.
 
-> **Status: experimental, not maintained.**
-> Development stopped in August 2026. The RAG knowledge-base market turned out to
-> be crowded with much stronger products, and I could not find a niche where this
-> would be viable. The code is published as a reference implementation of a
-> retrieval pipeline and its benchmark, not as a product.
+> **Status: not maintained.**
+> Reference implementation of a retrieval pipeline and its benchmark; not a product, not actively maintained
 
 ## What is implemented
 
